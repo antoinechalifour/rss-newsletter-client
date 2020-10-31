@@ -2,4 +2,5 @@ language: node_js
 
 script:
   - yarn compile
+  - yarn lint
   - yarn build
