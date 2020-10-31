@@ -1,9 +1,5 @@
 import { asValue, AwilixContainer } from "awilix";
-import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  GetServerSidePropsResult,
-} from "next";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/client";
 
 import { buildAxiosInstance } from "@/server/application/http";
@@ -11,15 +7,16 @@ import { AuthenticationError } from "@/server/AuthenticationError";
 import { container } from "@/server/container";
 import { AuthenticateRequest } from "@/server/usecase/AuthenticateRequest";
 
-type AuthenticatedGetServerSideProps<Props> = (
-  context: GetServerSidePropsContext,
+type AuthenticatedApiHandler = (
+  req: NextApiRequest,
+  res: NextApiResponse,
   container: AwilixContainer
-) => GetServerSidePropsResult<Props> | Promise<GetServerSidePropsResult<Props>>;
+) => void | Promise<void>;
 
-export const authenticated = <Props>(
-  callback: AuthenticatedGetServerSideProps<Props>
-): GetServerSideProps => async (context) => {
-  const session = await getSession(context);
+export const authenticated = (
+  callback: AuthenticatedApiHandler
+): NextApiHandler => async (req, res) => {
+  const session = await getSession({ req });
   const scopedContainer = container.createScope();
 
   try {
@@ -32,16 +29,13 @@ export const authenticated = <Props>(
       http: asValue(buildAxiosInstance(scopedContainer, authenticationToken)),
     });
 
-    return callback(context, scopedContainer);
+    return callback(req, res, scopedContainer);
   } catch (e) {
     if (!(e instanceof AuthenticationError)) {
       throw e;
     }
 
-    const { res } = context;
-    res.statusCode = 302;
-    res.setHeader("Location", "/api/auth/signin");
-
-    return { props: {} }; // Make TS happy :)
+    res.statusCode = 401;
+    res.end();
   }
 };

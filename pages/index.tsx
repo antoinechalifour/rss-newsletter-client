@@ -1,13 +1,16 @@
 import { GetServerSideProps } from "next";
-import { getSession, signin, signout, useSession } from "next-auth/client";
 import Head from "next/head";
 
+import { NewsletterConfigurationApi } from "@/client/NewsletterConfigurationApi";
 import { authenticated } from "@/server/application/page";
 
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
-  const [session] = useSession();
+  async function createNewsletterConfiguration() {
+    console.log(await NewsletterConfigurationApi.create());
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -21,14 +24,9 @@ export default function Home() {
         </h1>
 
         <div>
-          {session ? (
-            <>
-              <pre>{JSON.stringify(session, null, 2)}</pre>
-              <button onClick={() => signout()}>Sign out</button>
-            </>
-          ) : (
-            <button onClick={() => signin()}>Sign in</button>
-          )}
+          <button onClick={createNewsletterConfiguration}>
+            Create a new configuration
+          </button>
         </div>
 
         <p className={styles.description}>

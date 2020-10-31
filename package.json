@@ -11,13 +11,16 @@
   },
   "dependencies": {
     "awilix": "4.2.7",
+    "axios": "0.21.0",
     "ioredis": "4.19.1",
     "next": "10.0.0",
     "next-auth": "3.1.0",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "swr": "^0.3.8-beta.2"
   },
   "devDependencies": {
+    "@types/axios": "0.14.0",
     "@types/ioredis": "4.17.7",
     "@types/next-auth": "3.1.14",
     "@types/node": "14.14.6",
