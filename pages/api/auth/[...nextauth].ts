@@ -2,7 +2,9 @@ import { NextApiHandler } from "next";
 import NextAuth, { InitOptions as NextAuthOptions } from "next-auth";
 import Providers from "next-auth/providers";
 
+import { container } from "@/server/container";
 import { serverEnv } from "@/server/env";
+import { CreateAuthenticationToken } from "@/server/usecase/CreateAuthenticationToken";
 
 const options: NextAuthOptions = {
   providers: [
@@ -12,22 +14,21 @@ const options: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    session: async (session, user) => {
-      console.group("Callback/session");
-      console.log("Session:", session);
-      console.log("User:", user);
-      console.groupEnd();
+    session: async (session, user: any) => ({
+      expires: session.expires,
+      accountId: user.id,
+    }),
+    jwt: async (token, user, account) => {
+      const isLoginRequest = !!account;
 
-      return session;
-    },
-    jwt: async (token, user, account, profile, isNewUser) => {
-      console.group("Callback/JWT");
-      console.log("Token:", token);
-      console.log("User:", user);
-      console.log("Account:", account);
-      console.log("Profile:", profile);
-      console.log("isNewUser:", isNewUser);
-      console.groupEnd();
+      if (isLoginRequest) {
+        await container
+          .build(CreateAuthenticationToken)
+          .execute(account.id, account.accessToken);
+
+        token.id = account.id;
+      }
+
       return token;
     },
   },

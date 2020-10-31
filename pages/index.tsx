@@ -1,5 +1,8 @@
-import { signin, signout, useSession } from "next-auth/client";
+import { GetServerSideProps } from "next";
+import { getSession, signin, signout, useSession } from "next-auth/client";
 import Head from "next/head";
+
+import { authenticated } from "@/server/application/page";
 
 import styles from "../styles/Home.module.css";
 
@@ -77,3 +80,9 @@ export default function Home() {
     </div>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = authenticated(
+  (context, container) => {
+    return { props: {} };
+  }
+);
