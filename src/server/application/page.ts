@@ -4,7 +4,6 @@ import {
   GetServerSidePropsContext,
   GetServerSidePropsResult,
 } from "next";
-import { getSession } from "next-auth/client";
 
 import { buildAxiosInstance } from "@/server/application/http";
 import { AuthenticationError } from "@/server/AuthenticationError";
