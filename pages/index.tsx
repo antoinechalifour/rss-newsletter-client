@@ -1,8 +1,16 @@
+import { GetServerSideProps } from "next";
 import Head from "next/head";
+
+import { NewsletterConfigurationApi } from "@/client/NewsletterConfigurationApi";
+import { authenticated } from "@/server/application/page";
 
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
+  async function createNewsletterConfiguration() {
+    console.log(await NewsletterConfigurationApi.create());
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -14,6 +22,12 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+
+        <div>
+          <button onClick={createNewsletterConfiguration}>
+            Create a new configuration
+          </button>
+        </div>
 
         <p className={styles.description}>
           Get started by editing{" "}
@@ -64,3 +78,9 @@ export default function Home() {
     </div>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = authenticated(
+  (context, container) => {
+    return { props: {} };
+  }
+);

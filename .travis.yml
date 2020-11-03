@@ -3,4 +3,12 @@ language: node_js
 script:
   - yarn compile
   - yarn lint
+  - yarn test
   - yarn build
+
+env:
+  API_URL: "http://localhost:3000"
+  REDIS_URL: "redis://fakevalue"
+  AUTH_GOOGLE_CLIENT_SECRET: "something"
+  AUTH_GOOGLE_CLIENT_ID: "something"
+  AUTH_REDIRECT_URI: "something"
