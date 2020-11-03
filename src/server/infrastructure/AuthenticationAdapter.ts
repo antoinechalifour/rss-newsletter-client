@@ -1,8 +1,8 @@
 import { Redis } from "ioredis";
 
-import { AuthenticationError } from "@/server/AuthenticationError";
 import { AuthenticationPort } from "@/server/AuthenticationPort";
-import { AuthenticationToken } from "@/server/AuthenticationToken";
+import { AuthenticationError } from "@/server/models/AuthenticationError";
+import { AuthenticationToken } from "@/server/models/AuthenticationToken";
 
 interface Dependencies {
   redis: Redis;
@@ -17,7 +17,7 @@ export class AuthenticationAdapter implements AuthenticationPort {
 
   save(authenticationToken: AuthenticationToken) {
     return this.redis.set(
-      authenticationToken.accountId,
+      authenticationToken.sessionId,
       JSON.stringify(authenticationToken)
     );
   }

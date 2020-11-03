@@ -1,5 +1,5 @@
-import { AuthenticationError } from "@/server/AuthenticationError";
 import { AuthenticationPort } from "@/server/AuthenticationPort";
+import { AuthenticationError } from "@/server/models/AuthenticationError";
 
 interface Dependencies {
   authenticationPort: AuthenticationPort;

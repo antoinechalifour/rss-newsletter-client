@@ -5,7 +5,7 @@ import axios from "axios";
 import { NextApiRequest } from "next";
 import { parseCookies } from "nookies";
 
-import { AuthenticationToken } from "@/server/AuthenticationToken";
+import { AuthenticationToken } from "@/server/models/AuthenticationToken";
 
 export const buildAxiosInstance = (
   container: AwilixContainer,

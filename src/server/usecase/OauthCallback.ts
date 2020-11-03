@@ -1,5 +1,5 @@
 import { AuthenticationPort } from "@/server/AuthenticationPort";
-import { createAuthenticationToken } from "@/server/AuthenticationToken";
+import { createAuthenticationToken } from "@/server/models/AuthenticationToken";
 import { Oauth } from "@/server/oauth";
 
 interface Dependencies {

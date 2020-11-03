@@ -6,8 +6,8 @@ import {
 } from "next";
 
 import { buildAxiosInstance, getSessionId } from "@/server/application/http";
-import { AuthenticationError } from "@/server/AuthenticationError";
 import { container } from "@/server/container";
+import { AuthenticationError } from "@/server/models/AuthenticationError";
 import { AuthenticateRequest } from "@/server/usecase/AuthenticateRequest";
 
 type AuthenticatedGetServerSideProps<Props> = (
