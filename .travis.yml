@@ -3,4 +3,5 @@ language: node_js
 script:
   - yarn compile
   - yarn lint
+  - yarn test
   - yarn build

@@ -1,9 +1,9 @@
 import { when } from "jest-when";
 
-import { anAuthenticationPort } from "@/server/__tests__/AuthenticationTestAdapter";
-import { anAuthenticationToken } from "@/server/__tests__/AuthenticationToken";
 import { AuthenticationPort } from "@/server/AuthenticationPort";
 import { AuthenticationError } from "@/server/models/AuthenticationError";
+import { anAuthenticationPort } from "@/server/test-utils/AuthenticationTestAdapter";
+import { anAuthenticationToken } from "@/server/test-utils/AuthenticationToken";
 import { AuthenticateRequest } from "@/server/usecase/AuthenticateRequest";
 
 describe("AuthenticateRequest", () => {
