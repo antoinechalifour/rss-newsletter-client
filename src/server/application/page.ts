@@ -5,7 +5,7 @@ import {
   GetServerSidePropsResult,
 } from "next";
 
-import { buildAxiosInstance } from "@/server/application/http";
+import { buildAxiosInstance, getSessionId } from "@/server/application/http";
 import { AuthenticationError } from "@/server/AuthenticationError";
 import { container } from "@/server/container";
 import { AuthenticateRequest } from "@/server/usecase/AuthenticateRequest";
@@ -18,13 +18,13 @@ type AuthenticatedGetServerSideProps<Props> = (
 export const authenticated = <Props>(
   callback: AuthenticatedGetServerSideProps<Props>
 ): GetServerSideProps => async (context) => {
-  const session = await getSession(context);
+  const sessionId = getSessionId(context);
   const scopedContainer = container.createScope();
 
   try {
     const authenticationToken = await scopedContainer
       .build(AuthenticateRequest)
-      .execute(session);
+      .execute(sessionId);
 
     scopedContainer.register({
       authenticationToken: asValue(authenticationToken),
@@ -39,7 +39,7 @@ export const authenticated = <Props>(
 
     const { res } = context;
     res.statusCode = 302;
-    res.setHeader("Location", "/api/auth/signin");
+    res.setHeader("Location", "/api/auth/login");
 
     return { props: {} }; // Make TS happy :)
   }

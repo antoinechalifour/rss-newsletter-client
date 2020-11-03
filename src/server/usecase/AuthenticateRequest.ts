@@ -12,9 +12,9 @@ export class AuthenticateRequest {
     this.authenticationPort = authenticationPort;
   }
 
-  execute(session: any | null) {
-    if (!session) throw new AuthenticationError("User is not logged in");
+  execute(sessionId: string | null) {
+    if (!sessionId) throw new AuthenticationError("User is not logged in");
 
-    return this.authenticationPort.ofAccountId(session.accountId);
+    return this.authenticationPort.ofAccountId(sessionId);
   }
 }

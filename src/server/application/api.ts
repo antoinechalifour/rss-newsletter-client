@@ -1,7 +1,7 @@
 import { asValue, AwilixContainer } from "awilix";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
-import { buildAxiosInstance } from "@/server/application/http";
+import { buildAxiosInstance, getSessionId } from "@/server/application/http";
 import { AuthenticationError } from "@/server/AuthenticationError";
 import { container } from "@/server/container";
 import { AuthenticateRequest } from "@/server/usecase/AuthenticateRequest";
@@ -15,13 +15,13 @@ type AuthenticatedApiHandler = (
 export const authenticated = (
   callback: AuthenticatedApiHandler
 ): NextApiHandler => async (req, res) => {
-  const session = await getSession({ req });
+  const sessionId = getSessionId({ req });
   const scopedContainer = container.createScope();
 
   try {
     const authenticationToken = await scopedContainer
       .build(AuthenticateRequest)
-      .execute(session);
+      .execute(sessionId);
 
     scopedContainer.register({
       authenticationToken: asValue(authenticationToken),

@@ -14,15 +14,18 @@
     "axios": "0.21.0",
     "ioredis": "4.19.1",
     "next": "10.0.0",
+    "nookies": "^2.5.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "swr": "^0.3.8-beta.2"
+    "swr": "^0.3.8-beta.2",
+    "uuid": "^8.3.1"
   },
   "devDependencies": {
     "@types/axios": "0.14.0",
     "@types/ioredis": "4.17.7",
     "@types/node": "14.14.6",
     "@types/react": "16.9.55",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "4.6.0",
     "@typescript-eslint/parser": "4.6.0",
     "babel-eslint": "10.1.0",
